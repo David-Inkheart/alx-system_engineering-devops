@@ -1,2 +1,2 @@
 #!/bin/bash
-ls -l --time-style='+' _ls_
+ln -s /bin/ls __ls__
