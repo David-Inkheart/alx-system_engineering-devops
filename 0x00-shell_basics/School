@@ -1,0 +1,7 @@
+0-current_working_directory  11-lists          3-listfiles           9-firstdirdeletion
+100-lets_move                12-file_type      4-listmorefiles       __ls__
+101-clean_emacs              13-symbolic_link  5-listfilesdigitonly  README.md
+102-tree                     14-copy_html      6-firstdirectory      School
+103-commas                   1-listit          7-movethatfile        school.mgc
+10-back                      2-bring_me_home   8-firstdelete
+
