@@ -1,13 +1,20 @@
 # Using Puppet, create a configuration file
-$var = "Host *
-    PasswordAuthentication no
-    IdentityFile ~/.ssh/school
-    SendEnv LANG LC_*
-    HashKnownHosts yes
-    GSSAPIAuthentication yes
-    GSSAPIDelegateCredentials no"
+include stdlib
+# Declare the ssh_config file as a File resource
+file { '/etc/ssh/ssh_config':
+  ensure  => file,
+}
 
-file { '/root/.ssh/config':
-    ensure  => file,
-    content => $var,
+# Turn off password authentication
+file_line { 'Turn off passwd auth':
+  path    => '/etc/ssh/ssh_config',
+  line    => 'PasswordAuthentication no',
+  match   => '^PasswordAuthentication',
+}
+
+# Declare the identity file
+file_line { 'Declare identity file':
+  path    => '/etc/ssh/ssh_config',
+  line    => 'IdentityFile ~/.ssh/school',
+  match   => '^IdentityFile',
 }
