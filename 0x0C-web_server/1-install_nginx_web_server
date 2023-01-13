@@ -7,24 +7,24 @@
 #
 
 # Update package list
-apt-get update
+sudo apt-get update
 
 # Install nginx
-apt-get install -y nginx
+sudo apt-get install -y nginx
 
-# Change nginx config to listen on port 80
-sed -i 's/listen 80;/listen 8080;/g' /etc/nginx/sites-available/default
+# create directory for actual web content
+sudo mkdir -p /var/www/html
+sudo touch /var/www/html/index.html
 
-# Create a new server block to listen on port 80
-echo "server {
-    listen 80;
-    root /var/www/html;
-    index index.html;
+# assign ownership to the account that
+# we are currently signed in on
+sudo chown -R "$USER:$USER" /var/www/html/index.html
 
-    location / {
-        return 200 'Hello World!';
-    }
-}" > /etc/nginx/sites-available/default
+# confirm permission of webroot
+sudo chmod -R 755 /var/www
+
+#return a page that contains the string Hello World!
+echo "Hello World!" > /var/www/html/index.html
 
 # Restart nginx without using systemctl
 sudo service nginx restart
