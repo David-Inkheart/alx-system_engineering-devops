@@ -13,15 +13,15 @@ sudo apt-get update
 sudo apt-get install -y nginx
 
 # create directory for actual web content
-sudo mkdir -p /var/www/html
-sudo touch /var/www/html/index.html
+# sudo mkdir -p /var/www/html
+# sudo touch /var/www/html/index.html
 
 # assign ownership to the account that
 # we are currently signed in on
-sudo chown -R "$USER:$USER" /var/www/html/index.html
+sudo chown -R "$USER:$USER" /var/www/
 
 # confirm permission of webroot
-sudo chmod -R 755 /var/www
+# sudo chmod -R 755 /var/www
 
 #return a page that contains the string Hello World!
 echo "Hello World!" > /var/www/html/index.html
