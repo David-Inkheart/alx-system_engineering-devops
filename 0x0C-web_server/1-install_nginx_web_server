@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Install a nginx web server listening on port 80.
+#
+# Also, when querying nginx at its root / with a GET
+# request, it returns a page that contains the string
+# 'Hello World'.
+#
+
+# Update package list
+apt-get update
+
+# Install nginx
+apt-get install -y nginx
+
+# Change nginx config to listen on port 80
+sed -i 's/listen 80;/listen 8080;/g' /etc/nginx/sites-available/default
+
+# Create a new server block to listen on port 80
+echo "server {
+    listen 80;
+    root /var/www/html;
+    index index.html;
+
+    location / {
+        return 200 'Hello World!';
+    }
+}" > /etc/nginx/sites-available/default
+
+# Restart nginx without using systemctl
+sudo service nginx restart
