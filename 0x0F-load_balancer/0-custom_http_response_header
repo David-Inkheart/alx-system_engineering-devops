@@ -1,0 +1,61 @@
+#!/usr/bin/env bash
+# Install a nginx web server listening on port 80.
+#
+# configures a brand new Ubuntu machine
+# to the requirements asked in this task
+#
+# Configure Nginx so that its HTTP response contains
+# a custom header
+
+# variables to hold link and redirection
+link="https://www.youtube.com/watch?v=PCfiqY05BpA"
+redir_ect="server_name _;\n\trewrite ^/redirect_me/$ $link permanent;"
+location_error="location = /404.html {\n\t\troot /var/www/html/;\n\t\tinternal;\n"
+error_directive="error_page 404 /404.html;\n\t$location_error"
+error_404="}\n\n\t$error_directive\t}"
+
+# Update package list
+sudo apt-get update
+
+# Install nginx
+sudo apt-get install -y nginx
+
+# shorthand for allowing traffic on port 80
+sudo ufw allow 'Nginx HTTP'
+
+# assign ownership to the account that
+# we are currently signed in on
+sudo chown -R "$USER:$USER" /var/www/
+
+# create the server's default page
+echo "Hello World!" > /var/www/html/index.html
+
+# create the custom error text for not found page
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+
+# edit the 'default' and replace the text "server_name _;"
+# with the redirect rule defined in $redir_ect variable.
+sudo sed -i "s|server_name\ _;|$redir_ect|" /etc/nginx/sites-available/default
+
+# Update the Nginx configuration to use the custom 404 page
+sudo sed -i "0,/}/ s|}|$error_404|" /etc/nginx/sites-available/default
+
+# Restart nginx without using systemctl
+sudo service nginx restart
+
+config_file="/etc/nginx/nginx.conf"
+
+if ! sudo grep -q "add_header X-Served-By" $config_file;
+then
+    header_key="X-Served-By"
+    header_value="\$hostname"
+    header="add_header $header_key $header_value;"
+    search="http {"
+    new_conf="$search\n\t$header"
+
+    # Replace the value found with the new configuration
+    sudo sed -i "s|$search|$new_conf|" $config_file
+
+    # Restart Nginx Service
+    sudo service nginx restart
+fi
