@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # script to automate Nginx to run, and listen on port 80 of server
 sudo ln -sf /etc/nginx/sites-enabled/available /etc/nginx/sites-enabled/default
-sudo service nginx start
+sudo service nginx restart
