@@ -20,3 +20,26 @@ mandatory: no
 
 * Output: The subdomain [SUB_DOMAIN] is a [RECORD_TYPE] record and points to [DESTINATION]
 
+### 1. HAproxy SSL termination
+
+* *Create a certificate using certbot and configure HAproxy to accept encrypted traffic for your subdomain*
+
+- Requirements:
+
+HAproxy must be listening on port TCP 443
+HAproxy must be accepting SSL traffic
+HAproxy must serve encrypted traffic that will return the / of your web server
+When querying the root of your domain name, the page returned must contain Holberton School
+Share your HAproxy config as an answer file (/etc/haproxy/haproxy.cfg)
+The file 1-haproxy_ssl_termination must be your HAproxy configuration file
+
+### 2. No loophole in your website traffic
+
+* *Configure HAproxy to automatically redirect HTTP traffic to HTTPS.*
+
+- Requirements:
+
+This should be transparent to the user
+HAproxy should return a 301
+HAproxy should redirect HTTP traffic to HTTPS
+Share your HAproxy config as an answer file (/etc/haproxy/haproxy.cfg)
