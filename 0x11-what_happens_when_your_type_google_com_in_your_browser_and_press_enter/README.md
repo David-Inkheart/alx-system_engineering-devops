@@ -27,3 +27,10 @@
 - that the web server answers the request by serving a web page
 - that the application server generates the web page
 - that the application server request data from the database
+
+### 3. Folks on the Internet have been trying to put together a comprehensive answer to the question. Help them by submitting a pull request
+
+* *Requirements:*
+
+- The pull request must bring meaningful value
+  (not a typo correction or style improvement)
