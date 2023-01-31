@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 # script that runs software as another user
-
-useradd -m "$1"
-sudo -u "$1" bash -c 'whoami' 
+if id "$1" &>/dev/null; then
+	sudo -u "$1" bash -c 'whoami'
+else
+	useradd -m "$1"
+	sudo -u "$1" bash -c 'whoami'
+fi

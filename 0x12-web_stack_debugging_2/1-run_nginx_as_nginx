@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# script that configures a comntainer. 
+$add_port = "server {
+	listen 80 default_server;
+	listen [::]:80 default_server ipv6only=on;"
+sudo chown nginx:nginx /etc/nginx/nginx.conf
+chmod 0644 /etc/nginx/nginx.conf
+kill -9 $(ps -e | grep apache2 | awk '{print $1}')
+# sudo rm /etc/nginx/sites-enabled/default
+sed -i "s/server {/$add_port/g" /etc/nginx/sites-available/default
+# sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+sudo nginx -c "service nginx restart"
