@@ -1,9 +1,8 @@
 #!/usr/bin/python3
 """extend your Python script to export data in the CSV format"""
-
+import csv
 import requests
 import sys
-import csv
 
 
 def todo_list_progress(employee_id):
@@ -19,13 +18,9 @@ def todo_list_progress(employee_id):
                    task['title']) for task in todos]
 
     file_name = "{}.csv".format(employee_id)
-    with open(file_name, 'w', newline='') as f:
-        writer = csv.writer(f)
-        writer.writerow(["USER_ID", "USERNAME",
-                        "TASK_COMPLETED_STATUS", "TASK_TITLE"])
+    with open(file_name, 'w', encoding='utf-8') as f:
+        writer = csv.writer(f, delimiter=',', quoting=csv.QUOTE_ALL)
         writer.writerows(done_tasks)
-
-    print("Data exported successfully to file: {}".format(file_name))
 
 
 if __name__ == "__main__":
