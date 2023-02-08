@@ -3,29 +3,59 @@
 Extend the python script from exercise 0 to export data in JSON format.
 File name must be: todo_all_employees.json
 """
-import json
+from json import dumps
 import requests
 
 
-if __name__ == "__main__":
-    users = requests.get("http://jsonplaceholder.typicode.com/users").json()
-    tasks = requests.get("http://jsonplaceholder.typicode.com/todos").json()
-    data_load = {}
 
+def todo_list_progress(response, employee):
+    """Get all the tasks of an employee
+    """
+    result = list()
+
+    for task in response:
+        if task.get('userId') == employee.get('id'):
+            task_data = {
+                'username': employee.get('username'),
+                'task': task.get('title'),
+                'completed': task.get('completed'),
+            }
+
+            result.append(task_data)
+
+    return result
+
+
+if __name__ == '__main__':
+    # Main formatted names to API uris and filenames
+    main_url = 'https://jsonplaceholder.typicode.com'
+    users_uri = '{api}/users'.format(api=main_url)
+    todos_uri = '{api}/todos'.format(api=main_url)
+    filename = 'todo_all_employees.json'
+
+    # Users Response
+    users = requests.get(users_uri).json()
+
+    # Users TODO Response
+    tasks = requests.get(todos_uri).json()
+
+    users_tasks = dict()
+
+    # Stores all the tasks of each employee in the API data
     for user in users:
-        employee_id = user.get("id")
-        username = user.get("username")
-        all_tasks = []
+        user_id = user.get('id')
 
-        for task in tasks:
-            if (task.get("userId") == employee_id and task.get("completed")):
-                temp_task = {}
-                temp_task["task"] = task.get("title")
-                temp_task["completed"] = task.get("completed")
-                temp_task["username"] = username
-                all_tasks.append(temp_task)
+        # A list of all tasks of current employee
+        user_tasks = todo_list_progress(tasks, {
+            'id': user_id,
+            'username': user.get('username')
+        })
 
-        data_load[employee_id] = all_tasks
+        # Inserting the list of all tasks of current employee
+        # to a dictionary that stores all the employees with their tasks.
+        users_tasks[user_id] = user_tasks
 
-    with open("todo_all_employees.json", 'w+') as jsonfile:
-        json.dump(data_load, jsonfile)
+    # Create the new file with all the information
+    # Filename example: `todo_all_employees.json`
+    with open(filename, 'w', encoding='utf-8') as jsonfile:
+        jsonfile.write(dumps(users_tasks))
