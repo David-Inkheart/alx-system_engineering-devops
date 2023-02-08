@@ -1,31 +1,31 @@
 #!/usr/bin/python3
-"""extend your Python script to export data in the CSV format"""
+"""
+Extend the python script from exercise 0 to export data in CSV format.
+Record all tasks that are owned by the employee.
+Format must be: "USER_ID","USERNAME","TASK_COMPLETED_STATUS","TASK_TITLE"
+File name must be: USER_ID.csv
+"""
 import csv
 import requests
 import sys
 
-
-def todo_list_progress(employee_id):
-    url = "https://jsonplaceholder.typicode.com/users/{}".format(employee_id)
-    employee_data = requests.get(url).json()
-    employee_name = employee_data['name']
-
-    url = "https://jsonplaceholder.typicode.com/todos?userId={}"\
-        .format(employee_id)
-    todos = requests.get(url).json()
-
-    done_tasks = [(str(employee_id), employee_name, str(task['completed']),
-                   task['title']) for task in todos]
-
-    file_name = "{}.csv".format(employee_id)
-    with open(file_name, 'w', encoding='utf-8') as f:
-        writer = csv.writer(f, delimiter=',', quoting=csv.QUOTE_ALL)
-        writer.writerows(done_tasks)
-
-
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python3 todo_list_progress.py [employee_id]")
-    else:
-        employee_id = int(sys.argv[1])
-        todo_list_progress(employee_id)
+    emp_id = sys.argv[1]
+    username = requests.get("http://jsonplaceholder.typicode.com/users/{}"
+                            .format(emp_id)).json().get("username")
+    all_tasks = []
+    r = requests.get("http://jsonplaceholder.typicode.com/todos").json()
+
+    for task in r:
+        if (task.get("userId") == int(emp_id)):
+            temp = []
+            temp.extend((emp_id,
+                         username,
+                         task.get("completed"),
+                         task.get("title")))
+            all_tasks.append(temp)
+
+    with open("{}.csv".format(emp_id), 'w+') as csvfile:
+        writer = csv.writer(csvfile, delimiter=',',
+                            quotechar='"', quoting=csv.QUOTE_ALL)
+        writer.writerows(all_tasks)
