@@ -7,7 +7,6 @@ from json import dumps
 import requests
 
 
-
 def todo_list_progress(response, employee):
     """Get all the tasks of an employee
     """
