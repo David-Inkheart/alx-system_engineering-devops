@@ -33,4 +33,4 @@ if __name__ == "__main__":
         print("Usage: python3 todo_list_progress.py [employee_id]")
     else:
         employee_id = int(sys.argv[1])
-        print(todo_list_progress(employee_id))
+        print(todo_list_progress(employee_id), end='')
