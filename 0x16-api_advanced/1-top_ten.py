@@ -26,4 +26,4 @@ def top_ten(subreddit):
         for item in p_t:
             print(item)
     else:
-        return None
+        print('None')

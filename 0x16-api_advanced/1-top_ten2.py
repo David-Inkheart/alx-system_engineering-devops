@@ -24,4 +24,4 @@ def top_ten(subreddit):
         for k in post_titles:
             print(k)
     else:
-        return None
+        print(None)
