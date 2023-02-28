@@ -6,12 +6,12 @@ prints a sorted count of given keywords (case-insensitive, delimited by spaces
 """
 
 import requests
+import sys
 
 
-def count_words(subreddit, word_list, counts=None, after=None):
+def count_words(subreddit, word_list, after=None, counts=None):
     if counts is None:
         counts = {}
-
     if after is None:
         url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
     else:
@@ -19,11 +19,9 @@ def count_words(subreddit, word_list, counts=None, after=None):
                                                                      after)
 
     headers = {
-        "User-Agent": "anything"
-    }
+        "User-Agent": "newcode"}
 
     response = requests.get(url, headers=headers, allow_redirects=False)
-
     if response.status_code != 200:
         return
 
@@ -32,18 +30,18 @@ def count_words(subreddit, word_list, counts=None, after=None):
     children = data.get("children")
 
     for child in children:
-        title = child.get("data").get("title")
-        words = title.lower().split()
+        title = child.get("data").get("title").lower()
         for word in word_list:
-            if word.lower() in words:
-                if word.lower() in counts:
-                    counts[word.lower()] += words.count(word.lower())
-                else:
-                    counts[word.lower()] = words.count(word.lower())
+            word = word.lower()
+            if word in counts:
+                counts[word] += title.count(word)
+            else:
+                counts[word] = title.count(word)
 
     if after is None:
-        sorted_counts = sorted(counts.items(), key=lambda x: (-x[1], x[0]))
-        for count in sorted_counts:
-            print("{}: {}".format(count[0], count[1]))
+        counts = {word: count for word, count in counts.items() if count > 0}
+        for key, value in sorted(counts.items(), key=lambda x: (-x[1], x[0])):
+            print("{}: {}".format(key, value))
+        return
     else:
-        return count_words(subreddit, word_list, counts, after)
+        return count_words(subreddit, word_list, after, counts)
