@@ -1,8 +1,5 @@
-<h2>Webstack monitoring<h2>
-
-<br>
+<h1>Webstack monitoring<h1>
 
 <h3>Author<h3>
-<ul>
-    <li>David-Inkheart<li>
-<ul>
+
+<li>David-Inkheart<li>
