@@ -21,10 +21,9 @@ puppet apply 0-strace_is_your_friend.pp
 ```
 ### Tasks
 
-#### 0. Strace is you friend
+#### 0. Strace is your friend
 
 Use `strace` to find out why Apache is returning a 500 status code. Once the source of the problem is discovered, use Puppet to write a manifest that will correct the issue.
-Use `tmux` to run `strace` in one window, while running `curl` in the another.
 
 ###### Requirements:
 
