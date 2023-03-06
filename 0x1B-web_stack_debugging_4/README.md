@@ -13,7 +13,7 @@ We can see that 943 requests failed, let's fix our stack so that we get to 0,
 and remember that when something is going wrong, logs are your best friends!</p>
 
 
-`
+```
 root@0a62aa706eb3:/# ab -c 100 -n 2000 localhost/
 This is ApacheBench, Version 2.3 <$Revision: 1528965 $>
 Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
@@ -132,4 +132,4 @@ Percentage of the requests served within a certain time (ms)
   99%     28
  100%     31 (longest request)
 root@0a62aa706eb3:/#
-`
+```
