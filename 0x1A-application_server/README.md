@@ -264,6 +264,9 @@ ubuntu@229-web-01:~/AirBnB_clone_v3$
 
 ```
 vagrant@ubuntu-xenial:~$ curl 35.231.193.217/api/v1/states
-[{"__class__":"State","created_at":"2019-05-10T00:39:27.032802","id":"7512f664-4951-4231-8de9-b18d940cc912","name":"California","updated_at":"2019-05-10T00:39:27.032965"},{"__class__":"State","created_at":"2019-05-10T00:39:36.021219","id":"b25625c8-8a7a-4c1f-8afc-257bf9f76bc8","name":"Arizona","updated_at":"2019-05-10T00:39:36.021281"}]
+[{"__class__":"State","created_at":"2019-05-10T00:39:27.032802","id":"7512f664-4951-4231-8de9-b18d940cc912",
+"name":"California","updated_at":"2019-05-10T00:39:27.032965"},{"__class__":"State",
+"created_at":"2019-05-10T00:39:36.021219","id":"b25625c8-8a7a-4c1f-8afc-257bf9f76bc8",
+"name":"Arizona","updated_at":"2019-05-10T00:39:36.021281"}]
 vagrant@ubuntu-xenial:~$
 ```
