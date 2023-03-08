@@ -50,6 +50,46 @@ ubuntu@229-web-01:~/AirBnB_clone_v2$ curl 127.0.0.1:5000/airbnb-onepage/
 Hello HBNB!ubuntu@229-web-01:~/AirBnB_clone_v2$
 ```
 
+</h3>1. Set up production with Gunicorn</h3>
+
+Now that you have your development environment set up, let’s get your production
+application server set up with **Gunicorn** on **web-01**, port **5000**. You’ll need
+to install **Gunicorn** and any libraries required by your application. Your **Flask**
+application object will serve as a **WSGI** entry point into your application. This will
+be your production environment. As you can see we want the production and development of
+your application to use the same port, so the conditions for serving your dynamic
+content are the same in both environments.
+
+<h4>Requirements:</h4>
+
+- Install **Gunicorn** and any other libraries required by your application.
+- The Flask application object should be called app.
+    (This will allow us to run and check your code)
+- You will serve the same content from the same route as in the previous task. You can
+    verify that it’s working by binding a **Gunicorn** instance to localhost listening
+    on port **5000** with your application object as the entry point.
+- In order to check your code, the checker will bind a Gunicorn instance to port 6000,
+    so make sure nothing is listening on that port.
+
+Example:
+
+<h5>Terminal 1:</h5>
+
+```
+ubuntu@229-web-01:~/AirBnB_clone_v2$ gunicorn --bind 0.0.0.0:5000 web_flask.0-hello_route:app
+[2019-05-03 20:47:20 +0000] [3595] [INFO] Starting gunicorn 19.9.0
+[2019-05-03 20:47:20 +0000] [3595] [INFO] Listening at: http://0.0.0.0:5000 (3595)
+[2019-05-03 20:47:20 +0000] [3595] [INFO] Using worker: sync
+[2019-05-03 20:47:20 +0000] [3598] [INFO] Booting worker with pid: 3598
+```
+
+<h5>Terminal 2:</h5>
+
+```
+ubuntu@229-web-01:~$ curl 127.0.0.1:5000/airbnb-onepage/
+Hello HBNB!ubuntu@229-web-01:~$
+```
+
 <h3>2. Serve a page with Nginx</h3>
 
 Building on your work in the previous tasks, configure Nginx to serve
@@ -122,7 +162,7 @@ open, see tips below.
     the process listening on port 5001.
 - Include your Nginx config file as *3-app_server-nginx_config.*
 
-<h4>Tips<h4>
+<h4>Tips</h4>
 
 - Check out these articles/docs for clues on how to configure Nginx:
     [Understanding Nginx Server and Location Block Selection Algorithms](https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-location-block-selection-algorithms#matching-location-blocks), 
@@ -184,4 +224,40 @@ vagrant@ubuntu-xenial:~$ curl 35.231.193.217/airbnb-dynamic/number_odd_or_even/6
   </HEAD>
   <BODY><H1>Number: 6 is even</H1></BODY>
 </HTML>vagrant@ubuntu-xenial:~$
+```
+
+<h3>4. Let's do this for your API</h3>
+
+Let’s serve what you built for *AirBnB clone v3 - RESTful API* on **web-01**.
+
+<h4>Requirements</h4>
+
+- Git clone your AirBnB_clone_v3
+- Setup Nginx so that the route */api/* points to a **Gunicorn** instance
+    listening on port 5002
+- **Nginx** must serve this page both locally and on its public IP on port **80**
+- To test your setup you should bind **Gunicorn** to *api/v1/app.py*
+- It may be helpful to import your data (and environment variables) from [this project](https://intranet.alxswe.com/projects/301)
+- Upload your Nginx config file as /4-app_server-nginx_config/
+
+Example: 
+
+<h5>Terminal 1:</h5>
+
+```
+ubuntu@229-web-01:~/AirBnB_clone_v3$ tmux new-session -d 'gunicorn --bind 0.0.0.0:5002 api.v1.app:app'
+ubuntu@229-web-01:~/AirBnB_clone_v3$ curl 127.0.0.1:5002/api/v1/states
+[{"__class__":"State","created_at":"2019-05-10T00:39:27.032802","id":"7512f664-4951-4231-8de9-b18d940cc912","name":"California","updated_at":"2019-05-10T00:39:27.032965"},{"__class__":"State","created_at":"2019-05-10T00:39:36.021219","id":"b25625c8-8a7a-4c1f-8afc-257bf9f76bc8","name":"Arizona","updated_at":"2019-05-10T00:39:36.021281"}]
+ubuntu@229-web-01:~/AirBnB_clone_v3$
+ubuntu@229-web-01:~/AirBnB_clone_v3$ curl 127.0.0.1/api/v1/states
+[{"__class__":"State","created_at":"2019-05-10T00:39:27.032802","id":"7512f664-4951-4231-8de9-b18d940cc912","name":"California","updated_at":"2019-05-10T00:39:27.032965"},{"__class__":"State","created_at":"2019-05-10T00:39:36.021219","id":"b25625c8-8a7a-4c1f-8afc-257bf9f76bc8","name":"Arizona","updated_at":"2019-05-10T00:39:36.021281"}]
+ubuntu@229-web-01:~/AirBnB_clone_v3$
+```
+
+<h5>Local Terminal:</h5>
+
+```
+vagrant@ubuntu-xenial:~$ curl 35.231.193.217/api/v1/states
+[{"__class__":"State","created_at":"2019-05-10T00:39:27.032802","id":"7512f664-4951-4231-8de9-b18d940cc912","name":"California","updated_at":"2019-05-10T00:39:27.032965"},{"__class__":"State","created_at":"2019-05-10T00:39:36.021219","id":"b25625c8-8a7a-4c1f-8afc-257bf9f76bc8","name":"Arizona","updated_at":"2019-05-10T00:39:36.021281"}]
+vagrant@ubuntu-xenial:~$
 ```
