@@ -291,4 +291,4 @@ Let’s serve what you built for AirBnB clone - Web dynamic on web-01.
 
 After loading, your website should look like this:
 
-
+![image](https://user-images.githubusercontent.com/106752187/223793683-f6f035ed-c269-4ec2-b798-55214aa19ee8.png)
