@@ -291,6 +291,8 @@ Let’s serve what you built for AirBnB clone - Web dynamic on web-01.
 
 After loading, your website should look like this:
 
+![image](https://user-images.githubusercontent.com/106752187/223793683-f6f035ed-c269-4ec2-b798-55214aa19ee8.png)
+
 ### 6. Deploy it!
 
 Once you’ve got your application server configured, you want to set it up to run by default
@@ -316,7 +318,7 @@ top of the project, you do not need to create a Unix socket to bind the process 
 - Upload gunicorn.service to GitHub
 
 ```
-ob@dylan:~$ curl -s 127.0.0.1:5003/2-hbnb | tail -5
+bob@dylan:~$ curl -s 127.0.0.1:5003/2-hbnb | tail -5
     </div>
     <footer>
       <p>Holberton School</p>
