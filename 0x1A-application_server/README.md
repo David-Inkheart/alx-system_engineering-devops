@@ -49,3 +49,36 @@ ubuntu@229-web-01:~/AirBnB_clone_v2$ python3 -m web_flask.0-hello_route
 ubuntu@229-web-01:~/AirBnB_clone_v2$ curl 127.0.0.1:5000/airbnb-onepage/
 Hello HBNB!ubuntu@229-web-01:~/AirBnB_clone_v2$
 ```
+
+
+<h3>3. Add a route with query parameters</h3>
+
+<p>
+    Building on what you did in the previous tasks, let’s expand our web application
+    by adding another service for **Gunicorn** to handle.
+    In "AirBnB_clone_v2/web_flask/6-number_odd_or_even", the route "/number_odd_or_even/<int:n>"
+    should already be defined to render a page telling you whether an integer is odd or even.
+    You’ll need to configure Nginx to proxy HTTP requests to the route
+    "/airbnb-dynamic/number_odd_or_even/(any integer)" to a Gunicorn instance listening on port 5001.
+    The key to this exercise is getting Nginx configured to proxy requests to processes listening
+    on two different ports. You are not expected to keep your application server processes running.
+    If you want to know how to run multiple instances of Gunicorn without having multiple terminals
+    open, see tips below.
+</p>
+
+<h4>Requirements</h4>
+<ul>
+    <li>Nginx must serve this page both locally and on its public IP on port 80.</li>
+    <li>Nginx should proxy requests to the route /airbnb-dynamic/number_odd_or_even/(any integer)
+    the process listening on port 5001.</li>
+    <li>Include your Nginx config file as 3-app_server-nginx_config.</li>
+</ul>
+
+<h4>Tips<h4>
+
+<li>Check out these articles/docs for clues on how to configure Nginx:
+    [Understanding Nginx Server and Location Block Selection Algorithms](https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-location-block-selection-algorithms#matching-location-blocks), 
+    [Understanding Nginx Location Blocks Rewrite Rules](http://blog.pixelastic.com/2013/09/27/understanding-nginx-location-blocks-rewrite-rules/),
+    <link href="https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/#">Nginx Reverse Proxy.</link></li>
+
+
