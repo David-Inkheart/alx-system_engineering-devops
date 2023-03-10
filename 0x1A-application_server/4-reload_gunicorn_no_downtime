@@ -2,5 +2,4 @@
 # Script to gracefully reload Gunicorn configurations and restart workers
 # without killing master processes
 sudo kill -HUP "$(pgrep gunicorn | head -n 1)"
-sudo systemctl enable gunicorn.service
 sudo systemctl reload gunicorn
